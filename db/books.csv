@@ -1,0 +1,12 @@
+book_id,book_name,genre,author,price,quantity
+B001,The Silent Patient,Thriller,Alex Michaelides,499,4
+B002,Harry Potter and the Goblet of Fire,Fantasy,J.K. Rowling,699,8
+B003,Percy Jackson: The Lightning Thief,Fantasy,Rick Riordan,450,10
+B004,Atomic Habits,Self-Help,James Clear,599,5
+B005,The Martian,Science Fiction,Andy Weir,550,7
+B006,To Kill a Mockingbird,Classic,Harper Lee,399,4
+B007,The Alchemist,Philosophical,Paulo Coelho,350,6
+B008,The Da Vinci Code,Mystery,Dan Brown,480,9
+B009,Rich Dad Poor Dad,Finance,Robert Kiyosaki,450,11
+B010,Dune,Science Fiction,Frank Herbert,799,3
+B011,And Then There were None,Thriller,Agatha Cristie,499,3

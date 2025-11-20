@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Manager - Home</title>
+    <style>
+        * {
+            font-family: monospace;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #7958ff;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        #title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        #home_bg {
+            background-color: aliceblue;
+            color: blueviolet;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 60%;
+            margin-bottom: 2rem;
+        }
+
+        .operations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        #logout {
+            background-color: red;
+            color: white;
+            border: 2px solid white;
+            padding: 0.75rem 1.5rem;
+            margin-left: 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #logout:hover {
+            background-color: white;
+            color: red;
+            border: 2px solid blueviolet;
+            transform: scale(1.02);
+        }
+
+        .card {
+            width: 100%;
+            max-width: 250px;
+            height: 270px;
+            border-radius: 20px;
+            background: #f5f5f5;
+            position: relative;
+            padding: 1.8rem;
+            border: 2px solid #c3c6ce;
+            transition: 0.5s ease-out;
+            overflow: visible;
+            margin: 0 auto;
+        }
+
+        .card-details {
+            color: black;
+            height: 100%;
+            gap: .5em;
+            display: grid;
+            place-content: center;
+        }
+
+        /* Card titles styling */
+        .text-title,
+        .card-title {
+            color: blueviolet;
+            font-weight: bold;
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .text-body,
+        .card-body {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .card-button {
+            transform: translate(-50%, 125%);
+            width: 60%;
+            border-radius: 1rem;
+            border: none;
+            background-color: #008bf8;
+            color: #fff;
+            font-size: 1rem;
+            padding: .5rem 1rem;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            opacity: 0;
+            text-decoration: noneS;
+            transition: 0.3s ease-out;
+        }
+
+        .card:hover {
+            border-color: #008bf8;
+            box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .card:hover .card-button {
+            transform: translate(-50%, 50%);
+            opacity: 1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="header">
+        <h1 id="title">LIBRARY MANAGER</h1>
+        <form action="/logout" method="get">
+            <button type="submit" id="logout">LOGOUT</button>
+        </form>
+    </div>
+
+    <div id="home_bg">
+        <div class="operations">
+            <div class="card">
+                <div class="card-details">
+                    <p class="text-title">TRANSACTIONS</p>
+                    <p class="text-body">Select to either ISSUE or RETURN a book.</p>
+                </div>
+                <a class="card-button" href='./transactions'>Proceed</a>
+            </div>
+
+            <div class="card">
+                <div class="card-details">
+                    <p class="card-title">MANAGE MEMBERS</p>
+                    <p class="card-body">View, update, or remove member details.</p>
+                </div>
+                <a class="card-button" href='./members'>Proceed</a>
+            </div>
+
+            <div class="card">
+                <div class="card-details">
+                    <p class="card-title">MANAGE BOOKS</p>
+                    <p class="card-body">Check availability, edit book details, or add new books.</p>
+                </div>
+                <a class="card-button" href='./books'">Proceed</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

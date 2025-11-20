@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #7958ff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: aliceblue;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #555;
+      align-self: center;
+    }
+    input {
+      width: 95%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      background: #7958ff;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b4a1ff;
+    }
+
+  </style>
+
+</head>
+<body>
+  <form method="POST">
+    <h2 style="color: blueviolet;">Login</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <p style="color: red">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <input type="text" name="login_id" placeholder="Login ID" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html>

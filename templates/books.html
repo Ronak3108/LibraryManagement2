@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+
+    <style>
+        * {
+            font-family: monospace;
+        }
+
+        body {
+            background-color: blueviolet;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header {
+            background-color: rgb(192, 124, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            margin: 2rem 0;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        #search_form {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #search_input {
+            padding: 0.5rem 1rem;
+            margin-right: 1rem;
+            width: 75%;
+            color: blueviolet;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #search_button {
+            background: blueviolet;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+            margin-right: 1rem;
+        }
+
+        #search_button:hover {
+            background: white;
+            color: blueviolet;
+        }
+
+        .book-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            margin: 10px 0;
+            background: #f4f4f4;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .book-info {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .book-actions button {
+            margin-left: 10px;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .info-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #ffc107;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        #add-btn {
+            background: yellowgreen;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+        }
+
+        #add-btn:hover {
+            background: white;
+            color: yellowgreen;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-close:hover {
+            color: black;
+        }
+
+        .book_form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .book_form button {
+            background: yellowgreen;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+        }
+
+        .book_form button:hover {
+            background: white;
+            color: yellowgreen;
+            border: solid yellowgreen 1px;
+        }
+
+        .book_form input {
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+        .book_form label {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .book_form h2 {
+            font-size: 1.5rem;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="header">
+        <form method="POST" id="search_form">
+            <input type="text" name="search_query" id="search_input" placeholder="Search By Name">
+            <button type="submit" id="search_button">Search</button>
+            <button type="button" id="add-btn" onclick="openModal(`
+                <h2>Add New Book</h2>
+                <form class='book_form' method='POST' action='/add-book'>
+                    <label>ID</label>
+                    <input type='text' name='book_id'>
+                    <label>Name</label>
+                    <input type='text' name='book_name'>
+                    <label>Quantity</label>
+                    <input type='number' name='quantity'>
+                    <label>Price</label>
+                    <input type='number' name='price'>
+                    <label>Author</label>
+                    <input type='text' name='author'>
+                    <label>Genre</label>
+                    <input type='text' name='genre'>
+                    <button type='submit'>Add book</button>
+                </form>
+                `)">Add Book</button>
+        </form>
+    </div>
+
+    <div id="book_list">
+
+        {% for book_data in search_list %}
+        <div class="book-item">
+            <div class="book-info">
+                <span><b>ID: </b>{{book_data.book_id}}</span> |
+                <span><b>Name: </b>{{book_data.book_name}}</span> |
+                <span><b>Quantity: </b>{{book_data.quantity}}</span>
+            </div>
+
+            <div class="book-actions">
+                <button class="info-btn" onclick="openModal(`
+                    <h2>Book Details</h2>
+                    <p style='font-size: 20px;'><b>ID:</b> {{book_data.book_id}}</p>
+                    <p style='font-size: 20px;'><b>Name:</b> {{book_data.book_name}}</p>
+                    <p style='font-size: 20px;'><b>Quantity:</b> {{book_data.quantity}}</p>
+                    <p style='font-size: 20px;'><b>Author:</b> {{book_data.author}}</p>
+                    <p style='font-size: 20px;'><b>Genre:</b> {{book_data.genre}}</p>
+                    <p style='font-size: 20px;'><b>Price:</b> ₹{{book_data.price}}</p>
+                `)">More Info</button>
+
+                <button class="edit-btn" onclick="openModal(`
+                <h2>Edit book</h2>
+                <form class='book_form' method='POST' action='/editBook/{{book_data.book_id}}'>
+                    <label>Name</label>
+                    <input type='text' name='book_name' value='{{book_data.book_name}}'>
+                    <label>Quantity</label>
+                    <input type='number' name='quantity' value='{{book_data.quantity}}'>
+                    <label>Genre</label>
+                    <input type='text' name='genre' value='{{book_data.genre}}'>
+                    <label>Author</label>
+                    <input type='text' name='author' value='{{book_data.author}}'>
+                    <label>Price</label>
+                    <input type='number' name='price' value='{{book_data.price}}'>
+                    <button type='submit'>Save</button>
+                </form>
+            `)">Edit</button>
+
+                <button class="delete-btn" onclick="openModal(`
+                <h3>Delete {{book_data.book_name}}?</h3>
+                <form method='POST' action='/deleteBook/{{book_data.book_id}}'>
+                    <button type='submit' style='background:red;color:white;margin-left: 10px;padding: 6px 12px;border: none;cursor: pointer;border-radius: 4px;'>Confirm</button>
+                </form>
+            `)">Delete</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-box">
+
+            <span id="modal-close" class="modal-close">&#10006;</span>
+
+            <div id="modal-content"></div>
+
+        </div>
+    </div>
+
+
+    <script>
+        const modal = document.getElementById("modal");
+        const modalContent = document.getElementById("modal-content");
+        const modalClose = document.getElementById("modal-close");
+
+        function openModal(html) {
+            modalContent.innerHTML = html;
+            modal.style.display = "flex";
+        }
+
+        modalClose.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        };
+    </script>
+
+
+</body>
+
+
+</html>

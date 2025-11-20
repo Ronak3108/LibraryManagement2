@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Library Book Action</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: monospace;
+        }
+
+        body {
+            background: linear-gradient(135deg, #4a90e2, #9013fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 60%;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 3rem;
+            color: blueviolet;
+        }
+
+        .action-type {
+            font-size: medium;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 25px;
+            align-self: center;
+        }
+
+        .action-type label {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="radio"] {
+            margin-right: 6px;
+            accent-color: #4a90e2;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(90deg, #4a90e2, #9013fe);
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .message {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Library Book Action</h2>
+        <form action="/book_action" method="POST">
+
+            <div class="action-type">
+                <label><input type="radio" name="action" value="issue" required> Issue</label>
+                <label><input type="radio" name="action" value="return"> Return</label>
+            </div>
+
+            <div class="form-group">
+                <label for="member_id">Member ID:</label>
+                <input type="text" id="member_id" name="member_id" placeholder="Enter member ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="book_id">Book ID:</label>
+                <input type="text" id="book_id" name="book_id" placeholder="Enter book ID" required>
+            </div>
+
+            <button type="submit">Submit</button>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <p style="color: red">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="message">
+                Select an action and fill in details.
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

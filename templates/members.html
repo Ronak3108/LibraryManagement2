@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members</title>
+
+    <style>
+        * {
+            font-family: monospace;
+        }
+
+        body {
+            background-color: blueviolet;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header {
+            background-color: rgb(192, 124, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            margin: 2rem 0;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        #search_form {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #search_input {
+            padding: 0.5rem 1rem;
+            margin-right: 1rem;
+            width: 75%;
+            color: blueviolet;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #search_button {
+            background: blueviolet;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+            margin-right: 1rem;
+        }
+
+        #search_button:hover {
+            background: white;
+            color: blueviolet;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            margin: 10px 0;
+            background: #f4f4f4;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .member-info {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .member-actions button {
+            margin-left: 10px;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .info-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #ffc107;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        #add-btn {
+            background: yellowgreen;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+        }
+
+        #add-btn:hover {
+            background: white;
+            color: yellowgreen;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-close:hover {
+            color: black;
+        }
+
+                .member_form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .member_form button {
+            background: yellowgreen;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+        }
+
+        .member_form button:hover {
+            background: white;
+            color: yellowgreen;
+            border: solid yellowgreen 1px;
+        }
+
+        .member_form input {
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+        .member_form label {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .member_form h2 {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="header">
+        <form id='search_form' method="POST">
+            <input type="text" name="search_query" id="search_input" placeholder="Search By ID">
+            <button type="submit" id="search_button">Search</button>
+            <button type="button" id="add-btn" onclick="openModal(`
+                <h2>Add New Member</h2>
+                <form class='member_form' method='POST' action='/add-member'>
+                    <label>ID</label>
+                    <input type='text' name='member_id'>
+                    <label>Name</label>
+                    <input type='text' name='member_name'>
+                    <label>Phone No.</label>
+                    <input type='text' name='phone'>
+                    <label>Email ID</label>
+                    <input type='email' name='email'>
+                    <button type='submit'>Add Member</button>
+                </form>
+                `)">Add Member</button>
+
+        </form>
+    </div>
+
+    <div id="member_list">
+
+        {% for member_data in search_list %}
+        <div class="member-item">
+            <div class="member-info">
+                <span><strong>ID: </strong>{{member_data.member_id}}</span> |
+                <span><strong>Name: </strong>{{member_data.member_name}}</span>
+            </div>
+
+            <div class="member-actions">
+                <button class="info-btn" onclick="openModal(`
+                <h2>Member Details</h2>
+                <p><strong>ID:</strong> {{member_data.member_id}}</p>
+                <p><strong>Name:</strong> {{member_data.member_name}}</p>
+                <p><strong>Phone:</strong> {{member_data.phone}}</p>
+                <p><strong>Email:</strong> {{member_data.email}}</p>
+                <p><strong>Issued Book ID:</strong> {{member_data.book_id}}</p>
+                <p><strong>Issue Date</strong> {{member_data.issue_date}}</p>
+                <p><strong>Return Date:</strong> {{member_data.return_date}}</p>
+            `)">More Info</button>
+
+                <button class="edit-btn" onclick="openModal(`
+                <h2>Edit Member</h2>
+                <form class='member_form' method='POST' action='/edit/{{member_data.member_id}}'>
+                    <label>Name</label>
+                    <input type='text' name='member_name' value='{{member_data.member_name}}'>
+                    <label>Phone No.</label>
+                    <input type='text' name='phone' value='{{member_data.phone}}'>
+                    <label>Email ID</label>
+                    <input type='email' name='email' value='{{member_data.email}}'>
+                    <button type='submit'>Save</button>
+                </form>
+            `)">Edit</button>
+
+                <button class="delete-btn" onclick="openModal(`
+                <h3>Delete {{member_data.member_name}}?</h3>
+                <form method='POST' action='/delete/{{member_data.member_id}}'>
+                    <button type='submit' class='delete-btn' style='margin-left: 10px; padding: 6px 12px; border: none; cursor: pointer; border-radius: 4px;'>Confirm</button>
+                </form>
+            `)">Delete</button>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+        <div id="modal" class="modal-overlay">
+            <div class="modal-box">
+
+                <span id="modal-close" class="modal-close">&#10006;</span>
+
+                <div id="modal-content"></div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script>
+        const modal = document.getElementById("modal");
+        const modalContent = document.getElementById("modal-content");
+        const modalClose = document.getElementById("modal-close");
+
+        function openModal(html) {
+            modalContent.innerHTML = html;
+            modal.style.display = "flex";
+        }
+
+        modalClose.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        };
+    </script>
+
+
+</body>
+
+</html>

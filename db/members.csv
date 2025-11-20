@@ -1,0 +1,9 @@
+member_id,member_name,phone,email,book_id,issue_date,return_date
+B25EC031,Ronak Bothra,9351543190,ronak@example.com,,,
+B25EC043,Neha Kapoor,9988776655,neha.k@example.com,B330,,
+B25MT023,Harshit Jain,9090909090,harshit@example.com,,             ,
+B25MM005,Aryan Patel,9123987612,aryan.p@example.com,,            ,
+B25CS052,Suhana Khan,9911223344,suhana.k@example.com,B411,,
+B24MT002,Vedant Malhotra,9898989898,vedant@example.com,B222,,
+B24EC001,Anika Rao,9000012345,anika@example.com,,                 ,
+B25ME011,Arpit Pandey,6996341714,arpit@example.com,,,
